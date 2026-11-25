@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: cai-jiu-duo-lian-preview
+    runtime: python
+    plan: free
+    buildCommand: python database/build_db.py --force
+    startCommand: python web/server.py
+    healthCheckPath: /
+    envVars:
+      - key: HOST
+        value: 0.0.0.0

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sqlite3
 import sys
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -370,8 +371,10 @@ class RecipeHandler(SimpleHTTPRequestHandler):
 def main() -> None:
     if not DATABASE_PATH.exists():
         raise SystemExit(f"找不到資料庫：{DATABASE_PATH}；請先執行 python database/build_db.py")
-    server = ThreadingHTTPServer(("127.0.0.1", 8000), RecipeHandler)
-    print("菜就多煉已啟動：http://127.0.0.1:8000")
+    host = os.environ.get("HOST", "127.0.0.1")
+    port = int(os.environ.get("PORT", "8000"))
+    server = ThreadingHTTPServer((host, port), RecipeHandler)
+    print(f"菜就多煉已啟動：http://{host}:{port}")
     print("按 Ctrl+C 結束")
     try:
         server.serve_forever()
