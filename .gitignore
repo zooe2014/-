@@ -1,0 +1,15 @@
+# Python local environments and bytecode
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# SQLite temporary journal files (keep the seeded database itself in Git)
+*.sqlite3-shm
+*.sqlite3-wal
+*.db-journal
+
+# Common desktop noise
+.DS_Store
+Thumbs.db
+Desktop.ini
