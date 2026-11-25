@@ -5,6 +5,10 @@ INSERT OR IGNORE INTO users (id, display_name) VALUES ('demo-user', '示範使�
 INSERT OR IGNORE INTO personal_settings (user_id, taste_level, eats_spicy, default_servings)
 VALUES ('demo-user', 'medium', 0, 2);
 
+INSERT OR IGNORE INTO favorite_folders (id, user_id, name) VALUES
+ (1, 'demo-user', '早餐'),
+ (2, 'demo-user', '晚餐');
+
 INSERT OR IGNORE INTO equipment (id, slug, name, category) VALUES
  (1, 'quick-cooker', '快煮鍋', 'appliance'),
  (2, 'gas-stove', '瓦斯爐', 'appliance'),
@@ -41,7 +45,9 @@ INSERT OR IGNORE INTO seasonings (id, slug, name, category) VALUES
  (5, 'cooking-oil', '食用油', '油脂'),
  (6, 'sesame-oil', '香油', '油脂'),
  (7, 'miso', '味噌', '醬料'),
- (8, 'white-pepper', '白胡椒', '辛香調味');
+ (8, 'white-pepper', '白胡椒', '辛香調味'),
+ (9, 'chili-flakes', '辣椒粉', '辛香調味');
+UPDATE seasonings SET is_spicy = 1 WHERE slug = 'chili-flakes';
 
 INSERT OR IGNORE INTO ingredient_substitutions
  (source_ingredient_id, substitute_ingredient_id, usage_note, cooking_adjustment) VALUES
@@ -81,7 +87,7 @@ INSERT OR IGNORE INTO recipe_ingredients
 -- 調味料的 g/ml/tsp/tbsp 都保留原始值；此批示範不填未經查證的密度。
 INSERT OR IGNORE INTO recipe_seasonings
  (recipe_id, seasoning_id, quantity_value, unit, is_required, taste_adjustable) VALUES
- (1, 2, '10', 'ml', 1, 1), (1, 1, '1', 'g', 1, 1), (1, 5, '10', 'ml', 1, 1),
+ (1, 2, '10', 'ml', 1, 1), (1, 1, '1', 'g', 1, 1), (1, 5, '10', 'ml', 1, 0), (1, 9, '1', 'g', 0, 0),
  (2, 1, '2', 'g', 1, 1), (2, 8, '0.5', 'g', 0, 1),
  (3, 2, '1', 'tbsp', 1, 1), (3, 3, '2', 'tsp', 1, 1), (3, 4, '5', 'g', 1, 1), (3, 5, '8', 'ml', 1, 1),
  (4, 1, '1.5', 'g', 1, 1), (4, 4, '3', 'g', 0, 1), (4, 5, '10', 'ml', 1, 1),
@@ -110,7 +116,7 @@ INSERT OR IGNORE INTO recipe_equipment (recipe_id, equipment_id, requirement_gro
  (12, 2, 1), (12, 3, 1), (12, 5, 2);
 
 INSERT OR IGNORE INTO recipe_steps (recipe_id, step_number, instruction, duration_min) VALUES
- (1, 1, '豆腐切塊，雞蛋打散；蒜頭切末。', 3), (1, 2, '熱鍋加入食用油，將豆腐煎至表面微黃。', 5), (1, 3, '加入蒜末與蛋液，炒至蛋熟後以醬油和鹽調味，撒上青蔥。', 7),
+ (1, 1, '豆腐切塊，雞蛋打散；蒜頭切末。', 3), (1, 2, '熱鍋加入食用油，將豆腐煎至表面微黃。', 5), (1, 3, '加入蒜末與蛋液，炒至蛋熟後以醬油和鹽調味；可依是否吃辣加入辣椒粉，最後撒上青蔥。', 7),
  (2, 1, '青江菜洗淨切段，雞蛋打散。', 3), (2, 2, '湯鍋加水煮滾，放入青江菜梗煮至稍軟。', 5), (2, 3, '倒入蛋液形成蛋花，加入鹽調味，放入菜葉煮熟。', 4),
  (3, 1, '豆腐切厚片並以廚房紙巾吸去表面水分。', 3), (3, 2, '熱鍋加油，將豆腐兩面煎至金黃。', 6), (3, 3, '加入蒜末、醬油、蠔油、砂糖及少量水，小火燒至醬汁略收。', 9),
  (4, 1, '番茄切塊，雞蛋打散。', 3), (4, 2, '熱鍋加油炒熟蛋液，先盛起。', 3), (4, 3, '番茄入鍋炒軟，加入鹽與砂糖，再倒回雞蛋拌炒。', 6),
@@ -123,7 +129,8 @@ INSERT OR IGNORE INTO recipe_steps (recipe_id, step_number, instruction, duratio
  (11, 1, '香菇切片，青江菜洗淨切段。', 3), (11, 2, '湯鍋加水煮滾，先放香菇煮至出味。', 10), (11, 3, '加入青江菜煮熟，以鹽和白胡椒調味。', 5),
  (12, 1, '紅蘿蔔切薄片，豆腐切塊。', 3), (12, 2, '熱鍋加油，將紅蘿蔔炒至略軟，再加入豆腐。', 8), (12, 3, '加入醬油與鹽輕輕拌炒，撒上青蔥。', 5);
 
-INSERT OR IGNORE INTO recipe_favorites (user_id, recipe_id) VALUES ('demo-user', 1);
+INSERT OR IGNORE INTO recipe_favorites (user_id, recipe_id, folder_id) VALUES
+ ('demo-user', 1, 1), ('demo-user', 2, 2);
 
 -- 範例搜尋：示範使用者目前有豆腐、雞蛋、蒜頭、醬油、鹽和食用油。
 INSERT OR IGNORE INTO search_requests (id, user_id, cuisine_filter) VALUES (1, 'demo-user', 'any');

@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS seasonings (
     slug TEXT NOT NULL UNIQUE,
     name TEXT NOT NULL UNIQUE,
     category TEXT NOT NULL,
+    is_spicy INTEGER NOT NULL DEFAULT 0 CHECK (is_spicy IN (0, 1)),
     grams_per_ml TEXT,
     density_quality TEXT NOT NULL DEFAULT 'unknown'
         CHECK (density_quality IN ('verified', 'estimated', 'unknown')),
@@ -112,9 +113,19 @@ CREATE TABLE IF NOT EXISTS recipe_steps (
     PRIMARY KEY (recipe_id, step_number)
 );
 
+CREATE TABLE IF NOT EXISTS favorite_folders (
+    id INTEGER PRIMARY KEY,
+    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    name TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (user_id, name),
+    UNIQUE (id, user_id)
+);
+
 CREATE TABLE IF NOT EXISTS recipe_favorites (
     user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     recipe_id INTEGER NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
+    folder_id INTEGER REFERENCES favorite_folders(id) ON DELETE SET NULL,
     created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, recipe_id)
 );

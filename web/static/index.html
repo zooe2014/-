@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff8df">
+    <meta name="description" content="依照現有食材、調味料與器具，找出適合下廚的食譜。">
+    <title>菜就多煉｜今天想煮什麼？</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient ambient-left" aria-hidden="true"></div>
+    <div class="ambient ambient-right" aria-hidden="true"></div>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#search" aria-label="菜就多煉首頁">
+          <span class="brand-mark" aria-hidden="true">菜</span>
+          <span><strong>菜就多煉</strong><small>把冰箱裡的食材變成一餐</small></span>
+        </a>
+        <button class="icon-button settings-shortcut" data-nav="settings" aria-label="個人設定" title="個人設定">⚙</button>
+      </header>
+
+      <div id="app" class="app-content" aria-live="polite">
+        <div class="loading-card"><span class="loading-dot"></span>正在準備你的食譜資料…</div>
+      </div>
+
+      <nav class="bottom-nav" aria-label="主要導覽">
+        <button class="nav-item active" data-nav="search"><span aria-hidden="true">⌕</span><small>食譜搜尋</small></button>
+        <button class="nav-item" data-nav="favorites"><span aria-hidden="true">♡</span><small>我的收藏</small></button>
+        <button class="nav-item" data-nav="settings"><span aria-hidden="true">⚙</span><small>設定</small></button>
+      </nav>
+    </main>
+  </body>
+</html>

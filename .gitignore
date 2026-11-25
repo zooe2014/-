@@ -3,6 +3,7 @@
 venv/
 __pycache__/
 *.py[cod]
+tmp/
 
 # SQLite temporary journal files (keep the seeded database itself in Git)
 *.sqlite3-shm
@@ -13,3 +14,7 @@ __pycache__/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Source PDFs containing team names and student IDs; keep local, never publish
+/這個學上的我好想4  菜就多煉.pdf
+/這學上的我好想4_菜就多煉_功能需求與架構.pdf
